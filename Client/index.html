@@ -19,24 +19,21 @@
                 <input id="Title" type="text" name="title" placeholder="Title" />
                 <input id="Director" type="text" name="director" placeholder="Director" />
                 <input id="Genre" type="text" name="genre" placeholder="Genre" />
+                <input id="Image" type="text" name="image" placeholder="www.yourimage.jpg" />
 
                 <button type="submit">Create</button>
             </form>
+
+            <button type="button" onclick="getAllMovies()">Get All Movies</button>
+
+            <div id="displayMoviesDiv"></div>
         </myhead>
-        <thebody>
-            <div>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Genre</th>
-                    <th>Director</th>
-                </tr>
-            </div>
+        <thebody class="mypadtop">
             <div id="TableContent">
 
             </div>
 
-
+            
         </thebody>
     </wrapper>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

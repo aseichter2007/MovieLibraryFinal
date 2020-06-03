@@ -12,8 +12,20 @@
     max-width: 900px;
     border-left: 5px;
     border-right: 5px;
-    border-radius: 5%;
     border-style: solid;
     background-color: white;
     
+}
+.myborder{
+    
+    border: 5px solid black;
+}
+.mypadtop{
+    
+    padding-top: 25px;
+}
+.imagesizer{
+    height: auto;
+    width: 100%;
+    max-width: 120px;
 }
