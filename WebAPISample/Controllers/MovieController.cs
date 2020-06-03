@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using WebAPISample.Data;
 using WebAPISample.Models;
 
@@ -24,12 +23,10 @@ namespace WebAPISample.Controllers
         // GET api/movie
         [HttpGet]
         public IActionResult Get()
-        {
-            var movies = _context.Movies;           
-            string ICantHoldAllTheseDatas = JsonConvert.SerializeObject(movies);
-            
+        {         
             // Retrieve all movies from db logic
-            return Ok(ICantHoldAllTheseDatas);
+            var movies = _context.Movies;           
+            return Ok(movies);
         }
 
         // GET api/movie/5
@@ -37,27 +34,19 @@ namespace WebAPISample.Controllers
         public IActionResult Get(int id)
         {
             var movieInDb = _context.Movies.Where(m => m.MovieId == id).SingleOrDefault();
-            string movie = JsonConvert.SerializeObject(movieInDb);
             // Retrieve movie by id from db logic
             // return Ok(movie);
-            return Ok(movie);
+            return Ok(movieInDb);
         }
 
 
         // POST api/movie
         [HttpPost]
-        public async Task<IActionResult> Post(HttpResponseMessage response)
+        public async Task<IActionResult> Post([FromBody] Movie value)
         {
-            var responseData = await response.Content.ReadAsStringAsync();
-
-            var deserialized = JsonConvert.DeserializeObject(responseData);
-            
-            Movie value = new Movie();
             // Create movie in db logic
-            _context.Movies.Add(value);
+           _context.Movies.Add(value);
             _context.SaveChanges();
-
-
             return Ok(value);
         }
 
@@ -67,9 +56,19 @@ namespace WebAPISample.Controllers
         {
             // Update movie in db logic
             var movieInDb = _context.Movies.Where(m => m.MovieId == id).SingleOrDefault();
+            if (movie.Director != "" && movie.Director!=null)
+            {
             movieInDb.Director = movie.Director;
+            }
+            if (movie.Genre !=""&&movie.Genre!=null)
+            {
             movieInDb.Genre = movie.Genre;
+            }
+            if (movie.Title!=""&&movie.Title!=null)
+            {
             movieInDb.Title = movie.Title;
+            }
+
             _context.SaveChanges();
             return Ok(movie);
         }
