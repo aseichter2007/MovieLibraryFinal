@@ -78,16 +78,19 @@ function populateMyTable(data){
         `);
     }
 }
-function setupUpdatefields(id){
-    let title = $(`#tabledatatitle${id}`).value
-    let director = $(`#tabledatadirector${id}`).value
-    let genre = $(`#tabledatagenre${id}`).value
-    let img = $(`#tableimg${id}`).attr('src')
-    $(`tablerow${id}`).html(`
+function setUpdateFields(id){
+    let title = $("#tabledatatitle"+id).val();
+    let director = $("#tabledatadirector"+id).val();
+    let genre = $("#tabledatagenre"+id).val();
+    let img = $("#tableimg"+id).attr('src')
+    $("tablerow"+id).html("")
+    $("tablerow"+id).append(`
+    <form id="editmovie${id}">
     <input id="Title" type="text" name="edittitle" placeholder="${title}" />
     <input id="Director" type="text" name="editdirector" placeholder="${director}" />
     <input id="Genre" type="text" name="editgenre" placeholder="${genre}" />
     <input id="Image" type="text" name="editimage" placeholder="${img}" />
+    </form>
     `)
     
     //turn into input fields like top of index
@@ -160,8 +163,5 @@ function getDetails(id){
 function displayDetails(data){
     $("#TableContent").html("");
     
-
-
-
 
 }
