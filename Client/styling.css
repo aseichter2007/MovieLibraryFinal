@@ -1,0 +1,19 @@
+.mybody{
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background-image: linear-gradient(to right,black,grey,tan,tan,grey,black);
+}
+.mywrapper{
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 900px;
+    border-left: 5px;
+    border-right: 5px;
+    border-radius: 5%;
+    border-style: solid;
+    background-color: white;
+    
+}

@@ -3,20 +3,41 @@
 <head>
     <title>jQuery AJAX POST Form</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styling.css">
+
 </head>
-<body>
+<body class="mybody">
+    <wrapper class="mywrapper">
+        <myhead>
 
-<div id="response">
-    <pre></pre>
-</div>
+            <div id="response">
+                <pre></pre>
+            </div>
 
-<form id="my-form">
-    <input type="text" name="title" placeholder="Title" />
-    <input type="text" name="director" placeholder="Director" />
+            <form id="my-form">
+                <input type="text" name="title" placeholder="Title" />
+                <input type="text" name="director" placeholder="Director" />
 
-    <button type="submit">Submit</button>
-</form>
+                <button type="submit">Submit</button>
+            </form>
+        </myhead>
+        <thebody>
+            <div>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Director</th>
+                </tr>
+            </div>
+            <div id="TableContent">
 
+            </div>
+
+
+        </thebody>
+    </wrapper>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./app.js"></script>
 </body>
