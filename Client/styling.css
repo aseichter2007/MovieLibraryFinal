@@ -29,3 +29,8 @@
     width: 100%;
     max-width: 120px;
 }
+.mytablebuttons{
+    display: flex;
+    flex-direction: column;
+    border: 5px dotted black;
+}

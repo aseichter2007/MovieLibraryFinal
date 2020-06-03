@@ -51,7 +51,7 @@ namespace WebAPISample.Controllers
         }
 
         // PUT api/movie
-        [HttpPut]
+        [HttpPut("{id}")]
         public IActionResult Put([FromBody] Movie movie, int id)
         {
             // Update movie in db logic
@@ -68,7 +68,11 @@ namespace WebAPISample.Controllers
             {
             movieInDb.Title = movie.Title;
             }
-                                     
+            if (movie.ImgUrl !=""&&movie.ImgUrl !=null)
+            {
+                movieInDb.ImgUrl = movie.ImgUrl;
+            }                    
+            
             _context.SaveChanges();
             return Ok(movie);
         }
@@ -77,9 +81,18 @@ namespace WebAPISample.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            try
+            {
             var movieInDb = _context.Movies.Where(m => m.MovieId == id).SingleOrDefault();
             _context.Remove(movieInDb);
             _context.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
             // Delete movie from db logic
             return Ok();
         }
