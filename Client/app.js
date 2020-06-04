@@ -24,7 +24,9 @@ function processForm( e ){
 }
 
 $('#my-form').submit( processForm );
+
 $( document ).ready(getAllMovies);//get movies when page finishes loading
+
 function getAllMovies(){
     $.ajax({
         
@@ -63,7 +65,7 @@ function populateMyTable(data){
     )
     for (let i = 0; i < data.length; i++){
         $("#TableContent").append(`
-        <tr id="tablerow${data[i]["movieId"]}>
+        <tr id="tablerow${data[i]["movieId"]}">
             <td id="tabledataid${data[i]["movieId"]}">${data[i]["movieId"]}</td>
             <td id="tabledatatitle${data[i]["movieId"]}">${data[i]["title"]}</td>
             <td id="tabledatadirector${data[i]["movieId"]}">${data[i]["director"]}</td>
@@ -79,18 +81,22 @@ function populateMyTable(data){
     }
 }
 function setUpdateFields(id){
-    let title = $("#tabledatatitle"+id).val();
-    let director = $("#tabledatadirector"+id).val();
-    let genre = $("#tabledatagenre"+id).val();
+    let title = $("#tabledatatitle"+id).html();
+    let director = $("#tabledatadirector"+id).html();
+    let genre = $("#tabledatagenre"+id).html();
     let img = $("#tableimg"+id).attr('src')
-    $("tablerow"+id).html("")
-    $("tablerow"+id).append(`
+    $("#TableContent").empty();
+    //^working^
+    //problem lives here
+    $("#TableContent").append(`
     <form id="editmovie${id}">
-    <input id="Title" type="text" name="edittitle" placeholder="${title}" />
-    <input id="Director" type="text" name="editdirector" placeholder="${director}" />
-    <input id="Genre" type="text" name="editgenre" placeholder="${genre}" />
-    <input id="Image" type="text" name="editimage" placeholder="${img}" />
+        <input id="EditTitle" type="text" name="edittitle" placeholder="${title}" />
+        <input id="EditDirector" type="text" name="editdirector" placeholder="${director}" />
+        <input id="EditGenre" type="text" name="editgenre" placeholder="${genre}" />
+        <input id="EditImage" type="text" name="editimage" placeholder="${img}" />
     </form>
+    <button type="buton" onclick="updateMovie(${id})">Update</button>
+
     `)
     
     //turn into input fields like top of index
@@ -99,12 +105,16 @@ function setUpdateFields(id){
 }
 //put request with object and number in body data
 function updateMovie(id){
-    
+    let title = $("#EditTitle").val();
+    let director= $("#EditDirector").val();
+    let genre = $("#EditGenre").val();
+    let image =  $("#EditImage").val();
+
     var dict = {
-        Title : this["edittitle"].value,
-        Director: this["editdirector"].value,
-        Genre: this["editgenre"].value,
-        Image: this["editimage"].value
+        Title : title,
+        Director: director,
+        Genre: genre,
+        Image: image,
     };
 
     $.ajax({
@@ -115,6 +125,7 @@ function updateMovie(id){
         data: JSON.stringify(dict),
         success: function( data, textStatus, jQxhr ){
             $('#response pre').html( data );
+            getAllMovies();
         },
         error: function( jqXhr, textStatus, errorThrown ){
             console.log( errorThrown );
@@ -156,12 +167,56 @@ function getDetails(id){
             console.log(errorThrown);
         }
     })
-    //overwrite the table content with this. 
-    $("#TableContent").html("");
+ 
 
 }
 function displayDetails(data){
     $("#TableContent").html("");
-    
+    //todo:
+    //append a set of divs with the info for one object,
+    //like in populateMyTable above, but it won't need a loop.
+    //and probably need ids 
+    $("#TableContent").append(`
+    <div style="display:block" id="tablerow${data["movieId"]}">
+        <div><Img id="tableimg${data["movieId"]}" class="imagesizer" src="${data["imgUrl"]}"></div>
+        <div id="tabledataid${data["movieId"]}">${data["movieId"]}</div>
+        <div id="tabledatatitle${data["movieId"]}">${data["title"]}</div>
+        <div id="tabledatadirector${data["movieId"]}">${data["director"]}</div>
+        <div id="tabledatagenre${data["movieId"]}">${data["genre"]}</div>
+        <button type="button" onclick="setSingleUpdateFields(${data["movieId"]})">Edit</button>
+    </div>
+    `)
 
+    function searchByPartial(){
+        $.ajax({
+            url: 'https://localhost:44325/api/movie/'+id,
+            type: 'get',
+            dataType: 'json',
+            
+        })
+    }
+
+}
+function setSingleUpdateFields(id){
+    let title = $("#tabledatatitle"+id).html();
+    let director = $("#tabledatadirector"+id).html();
+    let genre = $("#tabledatagenre"+id).html();
+    let img = $("#tableimg"+id).attr('src')
+    $("#TableContent").empty();
+    //^working^
+    //problem lives here
+    $("#TableContent").append(`
+    <form id="editmovie${id}">
+        <input id="EditTitle" type="text" name="edittitle" placeholder="${title}" />
+        <input id="EditDirector" type="text" name="editdirector" placeholder="${director}" />
+        <input id="EditGenre" type="text" name="editgenre" placeholder="${genre}" />
+        <input id="EditImage" type="text" name="editimage" placeholder="${img}" />
+    </form>
+    <button type="buton" onclick="updateMovie(${id})">Update</button>
+
+    `)
+    
+    //turn into input fields like top of index
+    //name values below 
+    // 
 }

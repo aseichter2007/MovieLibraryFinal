@@ -38,6 +38,45 @@ namespace WebAPISample.Controllers
             // return Ok(movie);
             return Ok(movieInDb);
         }
+        public IActionResult Get([FromBody] Movie movie)
+        {
+            List<Movie> movies = new List<Movie>();
+            if (movie.Director != "" && movie.Director != null)
+            {
+                var selection = _context.Movies.Where(m => m.Director.Contains(movie.Director));
+                foreach (var item in selection)
+                {
+                    movies.Add(item);
+                }
+            }
+            if (movie.Genre != "" && movie.Genre != null)
+            {
+                var selection = _context.Movies.Where(m => m.Genre.Contains(movie.Genre));
+                foreach (var item in selection)
+                {
+                    movies.Add(item);
+                }
+            }
+            if (movie.Title != "" && movie.Title != null)
+            {
+                var selection = _context.Movies.Where(m => m.Director.Contains(movie.Director));
+                foreach (var item in selection)
+                {
+                    movies.Add(item);
+                }
+            }
+            if (movie.ImgUrl != "" && movie.ImgUrl != null)
+            {
+                var selection = _context.Movies.Where(m => m.Director.Contains(movie.Director));
+                foreach (var item in selection)
+                {
+                    movies.Add(item);
+                }
+            }
+            // Retrieve movie by id from db logic
+            // return Ok(movie);
+            return Ok(movies);
+        }
 
 
         // POST api/movie
