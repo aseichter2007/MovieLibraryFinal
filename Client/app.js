@@ -220,3 +220,25 @@ function setSingleUpdateFields(id){
     //name values below 
     // 
 }
+function searchpartial(){
+    let title = $("#Title").val();
+    let director = $("#Director").val();
+    let genre = $("#Genre").val();
+    let img = $("#Image").attr('src');
+   
+    $.ajax({
+        url: 'https://localhost:44325/api/movie/'+title+`/`+director+`/`+genre+`/`+ img,
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/json',
+
+        success: function( data, textStatus, jQxhr ){
+            $('#response pre').html( data );
+            displayDetails(data);
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+        }
+    });
+
+}

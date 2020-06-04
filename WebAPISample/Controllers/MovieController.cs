@@ -38,36 +38,39 @@ namespace WebAPISample.Controllers
             // return Ok(movie);
             return Ok(movieInDb);
         }
-        public IActionResult Get([FromBody] Movie movie)
+        [HttpGet]
+         [Route("api/movie/{title}/{director}/{genre}/{imgurl}")]
+
+        public IActionResult Get(string title, string director, string genre, string imgurl)
         {
             List<Movie> movies = new List<Movie>();
-            if (movie.Director != "" && movie.Director != null)
+            if (director != "" && director != null)
             {
-                var selection = _context.Movies.Where(m => m.Director.Contains(movie.Director));
+                var selection = _context.Movies.Where(m => m.Director.Contains(director));
                 foreach (var item in selection)
                 {
                     movies.Add(item);
                 }
             }
-            if (movie.Genre != "" && movie.Genre != null)
+            if (genre != "" && genre != null)
             {
-                var selection = _context.Movies.Where(m => m.Genre.Contains(movie.Genre));
+                var selection = _context.Movies.Where(m => m.Genre.Contains(genre));
                 foreach (var item in selection)
                 {
                     movies.Add(item);
                 }
             }
-            if (movie.Title != "" && movie.Title != null)
+            if (title != "" && title != null)
             {
-                var selection = _context.Movies.Where(m => m.Director.Contains(movie.Director));
+                var selection = _context.Movies.Where(m => m.Title.Contains(title));
                 foreach (var item in selection)
                 {
                     movies.Add(item);
                 }
             }
-            if (movie.ImgUrl != "" && movie.ImgUrl != null)
+            if (imgurl != "" && imgurl != null)
             {
-                var selection = _context.Movies.Where(m => m.Director.Contains(movie.Director));
+                var selection = _context.Movies.Where(m => m.ImgUrl.Contains(imgurl));
                 foreach (var item in selection)
                 {
                     movies.Add(item);
